@@ -32,11 +32,9 @@ public class Accelerometer extends Activity implements SensorEventListener{
     }
     @Override
     public void onSensorChanged(SensorEvent event) {
-        double x = roundTwoDecimals(event.values[0]);
-        double y = roundTwoDecimals(event.values[1]);
-        double z = roundTwoDecimals(event.values[2]);
+        //double x = roundTwoDecimals(event.values[0]);
 
-        acceleration.setText("X: "+x + "\nY: "+y + "\nZ: " + z);
+        acceleration.setText("X: "+event.values[0] + "\nY: "+event.values[1] + "\nZ: " + event.values[2]);
     }
 
     @Override
