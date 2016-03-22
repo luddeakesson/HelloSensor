@@ -8,6 +8,8 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 /**
  * Created by Ludvig on 2016-03-22.
  */
@@ -30,11 +32,20 @@ public class Accelerometer extends Activity implements SensorEventListener{
     }
     @Override
     public void onSensorChanged(SensorEvent event) {
-        acceleration.setText("X: "+event.values[0] + "\nY: "+event.values[1] + "\nZ: " + event.values[2]);
+        double x = roundTwoDecimals(event.values[0]);
+        double y = roundTwoDecimals(event.values[1]);
+        double z = roundTwoDecimals(event.values[2]);
+
+        acceleration.setText("X: "+x + "\nY: "+y + "\nZ: " + z);
     }
 
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
     }
+    public double roundTwoDecimals(double d){
+        DecimalFormat twoDForm = new DecimalFormat("#.##");
+        return Double.valueOf(twoDForm.format(d));
+    }
+
 }
