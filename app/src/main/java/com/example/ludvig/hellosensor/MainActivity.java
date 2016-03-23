@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button kompass, accelerometer;
+    private ImageView kompass, accelerometer;
+    private TextView accelerometer1, compass;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,8 +19,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
-        kompass = (Button)findViewById(R.id.kompass_button);
-        accelerometer =(Button)findViewById(R.id.accelerometer_button);
+        kompass = (ImageView)findViewById(R.id.kompass_button);
+        accelerometer =(ImageView)findViewById(R.id.accelerometer_button);
+        accelerometer1 =(TextView)findViewById(R.id.accelerometer_text);
+        compass = (TextView)findViewById(R.id.compass_text);
 
         kompass.setOnClickListener(new View.OnClickListener() {
             @Override
