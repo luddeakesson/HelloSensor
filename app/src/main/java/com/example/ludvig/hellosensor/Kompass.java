@@ -1,6 +1,7 @@
 package com.example.ludvig.hellosensor;
 
 import android.app.Activity;
+import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -17,9 +18,6 @@ import android.widget.TextView;
 public class Kompass extends Activity implements SensorEventListener {
 
 
-
-
-
         // define the display assembly compass picture
         private ImageView image;
 
@@ -29,7 +27,8 @@ public class Kompass extends Activity implements SensorEventListener {
         // device sensor manager
         private SensorManager mSensorManager;
 
-        TextView tvHeading;
+        private TextView direction;
+
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
@@ -40,10 +39,10 @@ public class Kompass extends Activity implements SensorEventListener {
             image = (ImageView) findViewById(R.id.imageViewCompass);
 
             // TextView that will tell the user what degree is he heading
-            tvHeading = (TextView) findViewById(R.id.tvHeading);
+            direction = (TextView) findViewById(R.id.tvHeading);
 
             // initialize your android device sensor capabilities
-            mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
+            mSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         }
 
         @Override
@@ -63,35 +62,32 @@ public class Kompass extends Activity implements SensorEventListener {
             mSensorManager.unregisterListener(this);
         }
 
-        @Override
-        public void onSensorChanged(SensorEvent event) {
+    @Override
+    public void onSensorChanged(SensorEvent sensorEvent) {
+        float degree = Math.round(sensorEvent.values[0]);
 
-            // get the angle around the z-axis rotated
-            float degree = Math.round(event.values[0]);
+        direction.setText("Heading: " + Float.toString(degree) + " degrees");
 
-            tvHeading.setText("Heading: " + Float.toString(degree) + " degrees");
+        // create a rotation animation (reverse turn degree degrees)
+        RotateAnimation ra = new RotateAnimation(
+                currentDegree,
+                -degree,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f);
 
-            // create a rotation animation (reverse turn degree degrees)
-            RotateAnimation ra = new RotateAnimation(
-                    currentDegree,
-                    -degree,
-                    Animation.RELATIVE_TO_SELF, 0.5f,
-                    Animation.RELATIVE_TO_SELF,
-                    0.5f);
+        // how long the animation will take place
+        ra.setDuration(210);
 
-            // how long the animation will take place
-            ra.setDuration(210);
+        // set the animation after the end of the reservation status
+        ra.setFillAfter(true);
 
-            // set the animation after the end of the reservation status
-            ra.setFillAfter(true);
+        // Start the animation
+        image.startAnimation(ra);
+        currentDegree = -degree;
+    }
 
-            // Start the animation
-            image.startAnimation(ra);
-            currentDegree = -degree;
-
-        }
-
-        @Override
+            @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
             // not in use
         }
