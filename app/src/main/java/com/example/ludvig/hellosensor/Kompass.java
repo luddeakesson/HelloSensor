@@ -2,6 +2,7 @@ package com.example.ludvig.hellosensor;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -90,5 +91,10 @@ public class Kompass extends Activity implements SensorEventListener {
             @Override
         public void onAccuracyChanged(Sensor sensor, int accuracy) {
             // not in use
+        }
+
+        public void onBackPressed(){
+            startActivity(new Intent(getApplicationContext(), MainActivity.class));
+            this.finish();
         }
     }

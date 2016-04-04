@@ -1,6 +1,7 @@
 package com.example.ludvig.hellosensor;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -44,6 +45,11 @@ public class Accelerometer extends Activity implements SensorEventListener{
     public double roundTwoDecimals(double d){
         DecimalFormat twoDForm = new DecimalFormat("#.##");
         return Double.valueOf(twoDForm.format(d));
+    }
+
+    public void onBackPressed(){
+        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+        this.finish();
     }
 
 }
